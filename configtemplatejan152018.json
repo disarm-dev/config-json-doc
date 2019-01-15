@@ -1,0 +1,1391 @@
+{
+  "config_id": "demo-app",
+  "config_version": "1.0.0",
+  "instance_id": "5c331c51f921c810a5ad2827",//generated automatically
+  "_id": "",
+  "applets": {
+    "irs_monitor": {
+      "season_start_dates": [
+        "2017-01-01",
+        "2018-01-01",
+        "2018-02-01",
+        "2018-04-01"
+      ],
+      "map": {
+        "chart_type": "map",
+        "bin_by": "location.selection.id",
+        "aggregation_names": [
+          "structures sprayed %", //changes the layer names below the map (must change also tabe colunm headers and popup on map)
+          "structures sprayed" //changes the layer names below the map (must change also tabe colunm headers and popup on map)
+        ],
+        "property_layers": [
+          {
+            "property": "risk",
+            "label": "Risk" //does not cause error but change does not reflect
+          },
+          {
+            "property": "NumStrct",
+            "label": "Number of structures" //changes layer name below the map on dashboard (must change also tabe colunm headers and popup on map)
+          }
+        ],
+        "response_point_fields": [
+          "recorded_on" //what shos when you click on a response on the dashboard
+        ]
+      },
+      "table": {
+        "chart_type": "table",
+        "bin_by": "location.selection.id",
+        "aggregation_names": [
+          "structures sprayed", //changes the table colunm headers in dashboard(must change also layer and popup on map)
+          "structures sprayed %" //changes the table colunm headers in dashboard(must change also layer and popup on map)
+        ],
+        "property_layers": [
+          {
+            "property": "NAME_3", //a filed for village name from supplied geodata
+            "label": "Name"
+          }
+        ]
+      },
+      "charts": [
+        {
+          "id": "structures_sprayed",
+          "style": {
+            "height_constraint": "none",
+            "width_constraint": "half"
+          },
+          "options": {
+            "layout": {
+              "showlegend": true,
+              "title": "Structures found %",//changes the title of the chart 
+              "yaxis": {
+                "title": "% structures sprayed" //changes the label of the y-axis
+              },
+              "xaxis": {
+                "title": "Period commencing" //changes the label of the x-axis 
+              }
+            },
+            "chart_type": "line",//type of chart can be chart to pie, bar, etc
+            "time_series": true,
+            "bin_by": "recorded_on",
+            "geographic_level_refactor_this_key_name": "location.selection.id",
+            "multi_series": [
+              {
+                "aggregation_name": "structures sprayed %" //Changes the legend on line graph at the bottom (must change also layer labels beyond map and popup on map)
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "irs_plan": {
+      "table_output": [ //array ofcollunms shown in the table on the plan module 
+        {
+          "display_name": "Locality name",//table heading in plan module
+          "source_field": "OBJECTID"
+        },
+        {
+          "display_name": "Number of structures enumerated",//table heading in plan module
+          "source_field": "NumStrct"
+        },
+        {
+          "display_name": "Predicted risk",//table heading in plan module
+          "source_field": "risk"
+        }
+      ],
+       "title": "The planner" // the display name of the planner on the front end
+    },
+    "irs_record_point": {
+      "metadata": {
+        "show": true,//toggle off or on to show metadata page on IRS record collection
+        "optional_fields": [ //text fields that are optional to fill in
+          "team_name"
+        ]
+      }
+    },
+    "irs_tasker": {},
+    "meta": {},
+    "seasons": {
+      "title": "Admin"
+    },
+    "debug": {}
+  },
+  "map_focus": {
+    "centre": {
+      "lat": -20.239855510970585,
+      "lng": 34.39481845029695
+    },
+    "zoom": 4.5 //limits of zooming out
+  },
+  "instance": {
+    "title": "DiSARM Yland Demo", // the title of your instance, shown on the top bar and top of sidebar
+    "location_name": "Yland",
+    "slug": "demo-app"
+  },
+  "spatial_hierarchy": {
+    "geodata_summaries": [],
+    "data_version": 2,
+    "markers": {
+      "planning_level_name": "locality", 
+      "record_location_selection_level_name": "locality",
+      "denominator_fields": {
+        "number_of_structures": "NumStrct" //this field comes from geodata
+      }
+    },
+    "levels": [
+      {
+        "level_id": "5c344fcaf921c810a5ad283f", //ID of geodata file uploaded in the geodata tab
+        "group_by_field": "OBJECTID",
+        "field_name": "OBJECTID",
+        "display_field_name": "OBJECTID",
+        "name": "locality"
+      }
+    ]
+  },
+  "form": {//the form (questions) in the record point module
+    "pages": [
+      {
+        "name": "page1",
+        "elements": [
+          {
+            "type": "text",
+            "name": "sprayed_count",
+            "title": "Number structures sprayed with DDT",
+            "isRequired": true, //validation making this field mandatory
+            "validators": [
+              {
+                "type": "numeric", //validation making this field allow only numbers
+                "text": "Must be more than zero", //message shown if requirement not met
+                "minValue": 0 //another restriction
+              }
+            ],
+            "inputType": "number"
+          },
+          {
+            "type": "text",
+            "name": "bednets_count",
+            "title": "Number bednets in use",
+            "isRequired": true,
+            "validators": [
+              {
+                "type": "numeric",
+                "text": "Must be more than zero",
+                "minValue": 0
+              }
+            ],
+            "inputType": "number"
+          }
+        ]
+      }
+    ]
+  },
+  "location_selection": { //names and IDs of admin units from geodata for user to select when collecting a record
+    "locality": [
+      {
+        "id": 60,
+        "name": "Ethapof",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 63,
+        "name": "Accusve",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 64,
+        "name": "Dolorbu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 65,
+        "name": "Molespun",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 66,
+        "name": "Quojevi",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 67,
+        "name": "Illoluxi",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 68,
+        "name": "Volupqat",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 69,
+        "name": "Volupqej",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 71,
+        "name": "Quoharun",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 73,
+        "name": "Earumgi",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 74,
+        "name": "Similne",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 75,
+        "name": "Utrapek",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 76,
+        "name": "Sedxudawo",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 77,
+        "name": "Veroyex",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 78,
+        "name": "Corpoqu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 79,
+        "name": "Excepgova",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 80,
+        "name": "Dolorhu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 81,
+        "name": "Velmofe",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 82,
+        "name": "Nostrxejiv",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 83,
+        "name": "Quamhom",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 84,
+        "name": "Numqudof",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 88,
+        "name": "Dolorlo",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 92,
+        "name": "Maiorle",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 93,
+        "name": "Nullafow",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 94,
+        "name": "Exerckes",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 95,
+        "name": "Fugapiyo",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 96,
+        "name": "Quimoqur",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 101,
+        "name": "Eoskuhul",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 102,
+        "name": "Etbezowa",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 104,
+        "name": "Animiqe",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 114,
+        "name": "Conseqi",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 115,
+        "name": "Assumro",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 116,
+        "name": "Libertupu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 121,
+        "name": "Etkamile",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 131,
+        "name": "Digniro",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 132,
+        "name": "Utxalumoga",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 133,
+        "name": "Atpiger",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 134,
+        "name": "Uttabug",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 135,
+        "name": "Quoqunug",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 136,
+        "name": "Utdapelu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 137,
+        "name": "Exercfiz",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 138,
+        "name": "Tempope",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 144,
+        "name": "Rerumgawis",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 145,
+        "name": "Eayokeg",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 152,
+        "name": "Aperiwoq",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 153,
+        "name": "Ducimloru",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 154,
+        "name": "Quibuka",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 155,
+        "name": "Quiayokat",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 156,
+        "name": "Etfical",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 157,
+        "name": "Idcuqop",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 158,
+        "name": "Aliquqacu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 159,
+        "name": "Maiorci",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 160,
+        "name": "Eumwiwalu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 172,
+        "name": "Suntzojicu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 173,
+        "name": "Quisqpe",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 174,
+        "name": "Volupvi",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 175,
+        "name": "Quisayuc",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 176,
+        "name": "Nescilu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 190,
+        "name": "Volupzor",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 192,
+        "name": "Etbuzoju",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 193,
+        "name": "Delenhira",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 304,
+        "name": "Autemqa",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 305,
+        "name": "Dolorpe",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 306,
+        "name": "Mollime",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 315,
+        "name": "Exbunex",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 316,
+        "name": "Quoyuyo",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 317,
+        "name": "Sitnalixu",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 321,
+        "name": "Dolorgoco",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 322,
+        "name": "Aliquse",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 324,
+        "name": "Quasilifo",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 325,
+        "name": "Nonvati",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 333,
+        "name": "Eligehuz",
+        "category": "Natusben Region"
+      },
+      {
+        "id": 146,
+        "name": "Quiroza",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 161,
+        "name": "Estwule",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 307,
+        "name": "Ipsabali",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 308,
+        "name": "Etfinuq",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 309,
+        "name": "Recuspevuh",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 310,
+        "name": "Iurepot",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 311,
+        "name": "Evenibe",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 312,
+        "name": "Etyiyuci",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 313,
+        "name": "Autjelo",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 314,
+        "name": "Repudlu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 318,
+        "name": "Ratiovu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 319,
+        "name": "Autdiyu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 320,
+        "name": "Exvohiga",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 323,
+        "name": "Aliquko",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 326,
+        "name": "Moleshis",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 327,
+        "name": "Idyixece",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 328,
+        "name": "Corpoxu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 329,
+        "name": "Vitaefe",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 330,
+        "name": "Estpamew",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 331,
+        "name": "Porroyug",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 332,
+        "name": "Sedpawe",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 334,
+        "name": "Asperdip",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 361,
+        "name": "Autpoyop",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 362,
+        "name": "Abtoquca",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 363,
+        "name": "Consenu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 364,
+        "name": "Molesro",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 372,
+        "name": "Perspyi",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 373,
+        "name": "Officno",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 374,
+        "name": "Ratioso",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 376,
+        "name": "Tempoyu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 380,
+        "name": "Autemdac",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 381,
+        "name": "Volupxof",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 383,
+        "name": "Nullare",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 384,
+        "name": "Eaquexe",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 385,
+        "name": "Aliquza",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 386,
+        "name": "Utpajowumi",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 387,
+        "name": "Illolip",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 388,
+        "name": "Aliasjez",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 389,
+        "name": "Numquqodo",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 390,
+        "name": "Aliasvuk",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 391,
+        "name": "Quisvif",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 392,
+        "name": "Facilxa",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 393,
+        "name": "Quiabis",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 394,
+        "name": "Etmoteb",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 395,
+        "name": "Cupiddum",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 396,
+        "name": "Idmokuwov",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 397,
+        "name": "Dolordo",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 398,
+        "name": "Quibihu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 399,
+        "name": "Optiopu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 400,
+        "name": "Sedriwux",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 401,
+        "name": "Quasivi",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 402,
+        "name": "Remcelasun",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 403,
+        "name": "Ullamyu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 404,
+        "name": "Dictaxal",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 405,
+        "name": "Quiarozu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 406,
+        "name": "Dictani",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 407,
+        "name": "Autemkob",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 408,
+        "name": "Quivitu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 410,
+        "name": "Dictani",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 411,
+        "name": "Eostococu",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 412,
+        "name": "Remcenoq",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 413,
+        "name": "Conseju",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 415,
+        "name": "Reicizeg",
+        "category": "Nondefo\nRegion"
+      },
+      {
+        "id": 57,
+        "name": "Sitmaduw",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 58,
+        "name": "Easewoq",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 59,
+        "name": "Offictuz",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 61,
+        "name": "Soluthaca",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 62,
+        "name": "Sedlagi",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 70,
+        "name": "Eaquebe",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 72,
+        "name": "Rerumxe",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 85,
+        "name": "Sedquqa",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 86,
+        "name": "Autemsev",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 87,
+        "name": "Etbanik",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 89,
+        "name": "Tenetbo",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 90,
+        "name": "Necesdi",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 91,
+        "name": "Magnaze",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 97,
+        "name": "Quisnar",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 98,
+        "name": "Nescipu",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 99,
+        "name": "Hicdamo",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 100,
+        "name": "Impedte",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 103,
+        "name": "Ratiogaz",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 105,
+        "name": "Pariari",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 106,
+        "name": "Incepufaci",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 107,
+        "name": "Estgejug",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 108,
+        "name": "Perfexale",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 109,
+        "name": "Quoshez",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 110,
+        "name": "Quikexuh",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 111,
+        "name": "Nonnoqi",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 112,
+        "name": "Sedhobabi",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 113,
+        "name": "Nullazi",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 117,
+        "name": "Velnuke",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 118,
+        "name": "Recusgel",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 119,
+        "name": "Temposu",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 120,
+        "name": "Consexasa",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 122,
+        "name": "Quisqdo",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 123,
+        "name": "Quiapit",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 124,
+        "name": "Etwomop",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 125,
+        "name": "Illumse",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 126,
+        "name": "Volupvude",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 127,
+        "name": "Sequiya",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 164,
+        "name": "Essesoti",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 165,
+        "name": "Praesro",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 166,
+        "name": "Volupfe",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 167,
+        "name": "Dolorca",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 168,
+        "name": "Tempopiyo",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 169,
+        "name": "Atquewiwa",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 170,
+        "name": "Pariatob",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 171,
+        "name": "Eligequsan",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 177,
+        "name": "Delenkayaq",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 178,
+        "name": "Sequipar",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 179,
+        "name": "Nemohexo",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 180,
+        "name": "Quiafefi",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 181,
+        "name": "Nobistul",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 182,
+        "name": "Exseseqe",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 183,
+        "name": "Ducimloju",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 184,
+        "name": "Corpojuci",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 191,
+        "name": "Repudda",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 195,
+        "name": "Corruhef",
+        "category": "Essesiz Region"
+      },
+      {
+        "id": 128,
+        "name": "Aliquse",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 129,
+        "name": "Eagexenob",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 130,
+        "name": "Autemgabi",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 139,
+        "name": "Commopi",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 140,
+        "name": "Molesbef",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 141,
+        "name": "Eawuzut",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 142,
+        "name": "Recuslu",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 143,
+        "name": "Utfuliz",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 147,
+        "name": "Nihilpi",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 148,
+        "name": "Hickugep",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 149,
+        "name": "Autpoham",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 150,
+        "name": "Eligelo",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 151,
+        "name": "Reprebo",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 162,
+        "name": "Ducimni",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 163,
+        "name": "Accusmi",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 335,
+        "name": "Accuswipa",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 337,
+        "name": "Eosboxoyu",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 338,
+        "name": "Namliyi",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 339,
+        "name": "Volupvoton",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 340,
+        "name": "Estxunul",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 341,
+        "name": "Volupju",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 342,
+        "name": "Quimofog",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 343,
+        "name": "Abpusuki",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 344,
+        "name": "Velkusa",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 345,
+        "name": "Solutnay",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 346,
+        "name": "Quiciciq",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 347,
+        "name": "Numquge",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 348,
+        "name": "Conseqor",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 349,
+        "name": "Quiaqac",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 350,
+        "name": "Occaeqa",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 352,
+        "name": "Nihilsanu",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 353,
+        "name": "Veritme",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 354,
+        "name": "Rerumvuc",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 355,
+        "name": "Molesza",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 356,
+        "name": "Axobexe",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 357,
+        "name": "Nisicug",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 358,
+        "name": "Dolorbe",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 359,
+        "name": "Impedsu",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 360,
+        "name": "Volupwu",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 365,
+        "name": "Evenixoxa",
+        "category": "Remsuza Region"
+      },
+      {
+        "id": 366,
+        "name": "Blandhir",
+        "category": "Remsuza Region"
+      }
+    ]
+  },
+  "aggregations": [ //the culculations to be done after record collection (counts to be kept)
+    {
+      "name": "structures sprayed",
+      "numerator_expr": "sprayed_count"
+    },
+    {
+      "name": "structures sprayed %",
+      "numerator_expr": "sprayed_count",
+      "denominator_field": "NumStrct"
+    },
+    {
+      "name": "bednets in use",
+      "numerator_expr": "bednets_count"
+    },
+    {
+      "name": "count",
+      "numerator_expr": "1"
+    }
+  ],
+  "fake_form": [ //triggured in the create fake data module
+    {
+      "sprayed_count": 2,
+      "bednets_count": 3
+    },
+    {
+      "sprayed_count": 3,
+      "bednets_count": 0
+    },
+    {
+      "sprayed_count": 0,
+      "bednets_count": 1
+    }
+  ],
+  "validations": [],
+  "presenters": {
+    "popup_description": [ 
+      {
+        "title": "Date",
+        "field": "recorded_on"
+      },
+      {
+        "title": "Recorded by",
+        "field": "user"
+      },
+      {
+        "title": "Number of structures sprayed", 
+        "field": "sprayed_count"
+      }
+    ]
+  },
+  "decorators": {}
+}
